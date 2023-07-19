@@ -2,10 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import menu from '../images/hamburger-menu-svgrepo-com.svg';
 import logo from '../images/user-3296.svg'
 import { toggleMenu } from '../utils/appLevelSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import store from '../utils/store';
+import { storeResults } from '../utils/searchSlice';
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const selector = useSelector(store => store.searchSlice);
+  const dispatch = useDispatch();
   const [querySuggestionsJson, setQuerySuggestionsJson] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
@@ -14,8 +18,12 @@ const Head = () => {
 
   useEffect(()=>{
     timerID.current = setTimeout(()=>{
-      getSearchSuggestions();
-    },2000);
+      if(selector[searchQuery]) {
+        setQuerySuggestionsJson(selector[searchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
+    },200);
     return () => clearTimeout(timerID.current);
   },[searchQuery]);
 
@@ -23,10 +31,12 @@ const Head = () => {
     const querySuggestions = await fetch(YOUTUBE_SEARCH_API);
     const queryResult = await querySuggestions.json();
     setQuerySuggestionsJson(queryResult[1]);
-    console.log(queryResult);
+    // console.log(queryResult);
+    dispatch(storeResults({
+      [searchQuery]: queryResult[1]
+    }));
   };
 
-  const dispatch = useDispatch();
   const toggleHandler = () => {
     dispatch(toggleMenu());
   }
