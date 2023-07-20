@@ -42,7 +42,7 @@ const Head = () => {
   }
 
   return (
-    <div className='grid grid-flow-col p-5 m-2 shadow-lg bg-blend-darken'>
+    <div className='grid grid-flow-col p-2 m-2 shadow-lg bg-blend-darken'>
       <div className='flex col-span-1'>
         <img className='h-8 cursor-pointer' alt='menu' src={menu} onClick={()=>toggleHandler()}/>
         <a href='/'><img className='h-8 mx-2 cursor-pointer' alt='uTube' src={process.env.REACT_APP_LOGO}/></a>
