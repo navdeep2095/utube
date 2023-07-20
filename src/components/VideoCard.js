@@ -1,13 +1,9 @@
 import React from 'react'
 
 const VideoCard = ({video}) => {
-  // const { snippet, statistics } = information;
-  // const {channelTitle, title, thumbnails} = snippet;
-  // console.log(thumbnails.high, title);
-
   return (
     <div className='p-2 m-2 w-72 shadow-lg'>
-      <img className='rounded-lg' src={video?.snippet?.thumbnails?.high?.url} />
+      <img className='rounded-lg' src={video?.snippet?.thumbnails?.high?.url} alt='Thumbnails'/>
       <ul>
         <li className='font-bold'>{video?.snippet?.title}</li>
         <li>{video?.snippet?.channelTitle}</li>
